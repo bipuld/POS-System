@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-glsp%jn+)3d6n_wo(x0an-%e(hk0r0m+r6**joeyn9)3htqxfa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,9 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jazzmin',
     'home'
+    # 'debug_toolbar'
+    
 ]
-EXTERNAL_APPS =[]
+EXTERNAL_APPS =[
+  
+]
+# INSTALLED_APPS.append(EXTERNAL_APPS)
 # INSTALLED_APPS.append(EXTERNAL_APPS)
 
 MIDDLEWARE = [

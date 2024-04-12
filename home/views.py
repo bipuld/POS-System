@@ -28,3 +28,7 @@ def logout_user(request):
 
 def signup(request):
     return render(request, 'user/signup.html')
+
+
+def contact_us(request):
+    return render(request, 'contact.html')
