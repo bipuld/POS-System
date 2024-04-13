@@ -170,14 +170,17 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            {% if user.is_authenticated %}
+                {% if user.Inventory_User.image %}
+                    <img src="{{ user.Inventory_User.image.url }}" alt="Profile" class="rounded-circle">
+                {% else %}
+                    <img src="{% static 'path_to_default_image.jpg' %}" alt="Default Profile Image">
+                {% endif %}
+            {% endif %}
+        {% if users.is_authenticated %}
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user.username}}  {{ user.Inventory_User.gender }}</span>
 
-
-            <img src="{{ }}" alt="Profile" class="rounded-circle">
-
-            {% comment %} {% if users.is_authenticated %}
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{user.username}}</span>
-
-            {% endif %} {% endcomment %}
+            {% endif %}
             {% if request.user.is_authenticated %}
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ request.user.username }}</span>
             {% endif %}

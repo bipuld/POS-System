@@ -32,12 +32,31 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<style>
+  .custom-alert {
+    display: none;
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 300px;
+  }
+</style>
+
   {% block extra_css %}{% endblock extra_css %}
 </head>
 
 <body>
-
-  
+ 
+  {% if messages %}
+  {% for message in messages %}
+    <div class="custom-alert alert alert-{{ message.tags }} animate__animated animate__fadeInDown" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
   <!-- Start Header -->
   {% include "includes/header.html" %}
   <!-- End Header -->
@@ -61,7 +80,29 @@
 
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
+ 
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Show the alert with animation
+      const alerts = document.querySelectorAll('.custom-alert');
+      alerts.forEach(function(alert) {
+        alert.style.display = 'block';
+      });
+  
+      // Close the alert on button click
+      const closeButtons = document.querySelectorAll('.custom-alert .btn-close');
+      closeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          this.parentElement.classList.add('animate__fadeOutRight');
+          setTimeout(function() {
+            this.parentElement.style.display = 'none';
+          }, 500); // Wait for the animation to finish
+        });
+      });
+    });
+  </script>
 {% block extra_js %}
+  
 
 
 

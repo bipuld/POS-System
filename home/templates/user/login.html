@@ -33,6 +33,34 @@
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
 
+
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+ <style>
+  .close-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .custom-alert {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 35px;
+    z-index: 9999;
+    max-width: 300px;
+  }
+  
+</style>
 </head>
 
 <body>
@@ -41,6 +69,14 @@
 
 
 <main>
+  {% if messages %}
+  {% for message in messages %}
+    <div class="custom-alert alert alert-{{ message.tags }} animate__animated animate__fadeInRight" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
   <div class="container">
 
     <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
@@ -54,10 +90,11 @@
                 <span class="d-none d-lg-block">Inventory Managment System</span>
               </a>
             </div><!-- End Logo -->
-
+       
+        
             <div class="card mb-3">
 
-             <form method="post" action="{% url 'index'  %}">
+             <form method="POST">
                <div class="card-body">
                   {% csrf_token %}
                  <div class="pt-4 pb-2">
@@ -121,9 +158,33 @@
 
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+  
+  {% if messages %}
+    
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Show the alert with animation
+      const alerts = document.querySelectorAll('.custom-alert');
+      alerts.forEach(function(alert) {
+        alert.style.display = 'block';
+      });
+  
+      // Close the alert on button click
+      const closeButtons = document.querySelectorAll('.custom-alert .btn-close');
+      closeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          this.parentElement.classList.add('animate__fadeOutRight');
+          setTimeout(function() {
+            this.parentElement.style.display = 'none';
+          }, 500); // Wait for the animation to finish
+        });
+      });
+    });
+  </script>
+ 
+  {% endif %}
   <!-- Vendor JS Files -->
-  <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></>
   <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'assets/vendor/chart.js/chart.umd.js' %}"></script>
   <script src="{% static 'assets/vendor/echarts/echarts.min.js' %}"></script>

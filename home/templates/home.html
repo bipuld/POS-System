@@ -2,7 +2,16 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Home{% endblock title %}
-{% block extra_css %}{% endblock extra_css %}
+{% block extra_css %}
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <!-- SweetAlert2 JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+
+
+{% endblock extra_css %}
 
 {% block content %}
 
@@ -17,6 +26,7 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
+
 
     <section class="section dashboard">
       <div class="row">
@@ -656,4 +666,6 @@
 
 
 {% endblock content %}
-{% block extra_js %}{% endblock extra_js %}
+{% block extra_js %}
+
+{% endblock extra_js %}
