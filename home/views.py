@@ -1,9 +1,11 @@
+from django.http import Http404
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
+from .models import UserInfo
 @login_required
 def index(request):
     return render(request, 'home.html')
@@ -13,8 +15,9 @@ def login_user(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        if user is not None:  
+        if user is not None: 
             login(request, user) 
+            return redirect('index')
         else:
             return redirect('login')
     else:
@@ -28,6 +31,18 @@ def logout_user(request):
 
 def signup(request):
     return render(request, 'user/signup.html')
+
+def user_profile(request,id):
+    user = User.objects.get(pk=id)  
+    user_profile = UserInfo.objects.get(user=user)
+    user_data = []
+
+    
+    context = {
+        "user_profile":user_profile,
+    }
+    
+    return render(request, 'user/profile.html',context)
 
 
 def contact_us(request):

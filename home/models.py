@@ -16,7 +16,7 @@ class UserInfo(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     phone.help_text = "if has more than one no write separated with comma."
-    image = models.ImageField(upload_to="User/Profile/Images", blank=True, null=True)
+    image = models.ImageField(upload_to="profile", blank=True, null=True)
     is_verify = models.BooleanField(default=False)
     intro = models.TextField(blank=True, null=True)
     email = models.EmailField()
@@ -24,12 +24,11 @@ class UserInfo(models.Model):
     @property
     def full_name(self):
         if self.user:
-            return f"{self.user.first_name} {self.user.last_name}"
+            return f"{self.first_name} {self.last_name}"
         else:
             return None
-
     def __str__(self):
         if self.user:
-            return f"{self.user.first_name} {self.user.last_name}"
+            return f"{self.first_name} {self.last_name}"
         else:
             return "Anonymous User"
