@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Home{% endblock title %}
+{% block title %}Profile{% endblock title %}
 {% block extra_css %}{% endblock extra_css %}
 
 {% block content %}
@@ -70,7 +70,7 @@
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                   <h5 class="card-title">About</h5>
-                  <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+                  <p class="small fst-italic">{{user_profile.intro}}</p>
 
                   <h5 class="card-title">Profile Details</h5>
 
@@ -114,35 +114,40 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
+                  
+                  <form method="POST" action = ""  enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       
                       <div class="col-md-8 col-lg-9">
                         {% if user_profile.image %}
-                        <img src="{{ user_profile.image.url }}" alt="{{ user_profile.image }}" class="rounded-circle">
+                        <img  id="profileImage" src="{{ user_profile.image.url }}" alt="{{ user_profile.image }}" class="rounded-circle">
                         {% else %}
-                        <img src="" alt="Default Profile Image" class="rounded-circle">
+                        <img src=""  id="profileImage"alt="Default Profile Image" class="rounded-circle">
                       {% endif %}
-
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
+                      <div id="imageName"></div>
+                      <div class="pt-2">
+                        <span id="selectedFileName"></span>
+                        {% comment %} <input type="text" id="fileName" readonly> {% endcomment %}
+                        {% comment %} <label for="imageUpload" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i> Upload</label> {% endcomment %}
+                        
+                        <input type="file" id="imageUpload" name ="profile_img" accept="image/*">
+                    </div>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                        <input name="fullname" type="text" class="form-control" value="{{user_profile.full_name}}" id="fullName" value="Kevin Anderson">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                       <div class="col-md-8 col-lg-9">
-                        <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                        <textarea name="about" class="form-control"  id="about" style="height: 100px">{{user_profile.intro}}</textarea>
                       </div>
                     </div>
 
@@ -153,66 +158,32 @@
                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
-                      </div>
-                    </div>
-
+                 
                     <div class="row mb-3">
                       <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="country" type="text" class="form-control" id="Country" value="USA">
+                        <input name="country" type="text" class="form-control" id="Country" value="{{user_profile.country}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
+                        <input name="address" type="text" class="form-control" id="Address" value="{{user_profile.country}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                        <input name="phone" type="text" class="form-control" id="Phone" value="{{user_profile.phone}}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                        <input name="email" type="email" class="form-control" id="Email" value="{{user_profile.email}}">
                       </div>
                     </div>
 
@@ -310,4 +281,19 @@
 
 {% endblock %}
 
-{% block extra_js %}{% endblock extra_js %}
+{% block extra_js %}
+<script>
+  $(document).ready(function() {
+      $('#imageUpload').change(function(e) {
+          var image = e.target.files[0];
+          if (!image.type.match('image.*')) {
+              alert('Please select an image file.');
+              return;
+          }
+          $('#fileName').val(image.name);
+          $('#selectedFileName').text(image.name);
+      });
+  });
+  </script>
+
+{% endblock extra_js %}

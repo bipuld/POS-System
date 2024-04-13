@@ -15,6 +15,8 @@ class UserInfo(models.Model):
     phone = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    country = models.CharField(max_length=25)
+    address = models.CharField(max_length=55)
     phone.help_text = "if has more than one no write separated with comma."
     image = models.ImageField(upload_to="profile", blank=True, null=True)
     is_verify = models.BooleanField(default=False)

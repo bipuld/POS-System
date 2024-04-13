@@ -35,6 +35,29 @@ def signup(request):
 def user_profile(request,id):
     user = User.objects.get(pk=id)  
     user_profile = UserInfo.objects.get(user=user)
+    if request.method == "POST":
+        full_name = request.POST.get('fullname')
+        if full_name:
+            first_name, last_name = full_name.split(' ')
+        user_profile.first_name = first_name
+        user_profile.last_name = last_name           
+        user_profile.intro = request.POST.get('about')
+        user_profile.phone = request.POST.get('phone')
+        user_profile.country = request.POST.get('country')
+        user_profile.address = request.POST.get('address')
+        profile_image = request.FILES.get('profile_img')
+        if profile_image:
+          
+            user_profile.image = profile_image
+        else:
+            
+            pass  # Or consider setting user_profile.image to None explicitly 
+        user_profile.email = request.POST.get('email')
+        print("User profile", user_profile.image)
+        user_profile.save()
+        if user_profile:
+            print("Profile updated Successfully")
+
     user_data = []
 
     
