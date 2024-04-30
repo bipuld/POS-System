@@ -1,0 +1,1 @@
+E:\coding\python\django\pos_system\env\Scripts\activate.bat
